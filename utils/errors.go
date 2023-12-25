@@ -32,7 +32,7 @@ func GetError(ctx *fiber.Ctx, status int, err string) error {
 func NewErrorResponse(err string) ErrorResponse {
 	var elem ErrorValidatorField
 	elem.Message = err
-	fmt.Printf(err)
+	fmt.Println(err)
 
 	return ErrorResponse{[]ErrorValidatorField{elem}}
 }
