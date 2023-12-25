@@ -3,21 +3,18 @@ package routes
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/nadavw1312/golang-fiber/controllers"
-	"github.com/nadavw1312/golang-fiber/middleware"
 )
 
 func InitUserRoutes(api *fiber.App) {
-	user := api.Group("/user") // /api
-	uc := controllers.NewUserController("users")
+	router := api.Group("/user") // /api
+	uc := controllers.UserControllerP
 
-	user.Post("/", uc.CreateUser)
-	user.Post("/signin", uc.Signin)
+	router.Post("/", uc.CreateUser)
 
-	user.Get("/protected", middleware.Protected(), func(c *fiber.Ctx) error {
-		return c.SendString("You are protected")
-	})
-	user.Get("/:id", uc.GetUser)
+	router.Put("/:id", uc.UpdateById)
 
-	user.Delete("/:id", uc.DeleteUser)
+	router.Get("/:id", uc.GetUser)
+	router.Get("/", uc.GetAll)
 
+	router.Delete("/:id", uc.DeleteUser)
 }
